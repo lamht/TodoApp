@@ -29,7 +29,7 @@ namespace TodoApi.Controllers
         public IEnumerable<TodoItem> GetAll()
         {
             _logger.LogInformation("Get list item ===========");  
-            return _context.TodoItems.ToList();
+            return _context.TodoItems.OrderBy(t => t.Id).ToList();
         }
 
         [HttpGet("{id}", Name = "GetTodo")]
@@ -86,7 +86,7 @@ namespace TodoApi.Controllers
         public IActionResult Delete(long id)
         {
             _logger.LogInformation("Delete item {ID}", id);
-            var todo = _context.TodoItems.First(t => t.Id == id);
+            var todo = _context.TodoItems.FirstOrDefault(t => t.Id == id);
             if (todo == null)
             {
                 return NotFound();
