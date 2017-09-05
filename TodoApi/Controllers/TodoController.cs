@@ -46,12 +46,12 @@ namespace TodoApi.Controllers
 
         [HttpPost]
         public IActionResult Create([FromBody] TodoItem item)
-        {
-            _logger.LogInformation("Create item {ID}", item.Name);
+        {           
             if (item == null)
             {
                 return BadRequest();
             }
+             _logger.LogInformation("Create item {ID}", item.Name);
 
             _context.TodoItems.Add(item);
             _context.SaveChanges();
@@ -61,12 +61,12 @@ namespace TodoApi.Controllers
 
         [HttpPut("{id}")]
         public IActionResult Update(long id, [FromBody] TodoItem item)
-        {
-             _logger.LogInformation("Update item {ID}", id);
+        {             
             if (item == null || item.Id != id)
             {
                 return BadRequest();
             }
+            _logger.LogInformation("Update item {ID}", id);
 
             var todo = _context.TodoItems.FirstOrDefault(t => t.Id == id);
             if (todo == null)

@@ -34,6 +34,7 @@ namespace TodoApi
             // Add framework services.
             services.AddDbContext<TodoContext>(opt => opt.UseInMemoryDatabase());
             services.AddMvc();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,7 +46,14 @@ namespace TodoApi
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
             
-            app.UseMvc();
+            app.UseMvc(routes =>
+                {
+                    routes.MapRoute(
+                        name: "default",
+                        template: "{controller=Home}/{action=Index}/{id?}");
+                });
+                
+            app.UseStaticFiles();
         }
     }
 }
